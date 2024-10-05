@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, select {
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .list {
+            margin-top: 20px;
+        }
+        .list-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-item img {
+            max-width: 200px;
+            max-height: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Product Management</h1>
+
+        <!-- Section for Adding Category -->
+        <div class="section">
+            <h2>Add Category</h2>
+            <form id="addCategoryForm">
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="categoryName" name="name" required>
+                <button type="submit">Add Category</button>
+            </form>
+        </div>
+
+        <!-- Section for Adding Product -->
+        <div class="section">
+            <h2>Add Product</h2>
+            <form id="addProductForm" enctype="multipart/form-data">
+                <label for="productName">Product Name:</label>
+                <input type="text" id="productName" name="name" required>
+
+                <label for="productCategory">Category:</label>
+                <select id="productCategory" name="categoryId" required></select>
+
+                <label for="productDetails">Details (Key:Value, separated by commas):</label>
+                <input type="text" id="productDetails" name="details" required>
+
+                <label for="productQuantity">Quantity:</label>
+                <input type="number" id="productQuantity" name="quantity" required>
+
+                <label for="productPrice">Price:</label>
+                <input type="number" id="productPrice" name="price" step="0.01" required>
+
+                <label for="productImage">Image:</label>
+                <input type="file" id="productImage" name="image" accept="image/*">
+
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+
+        <!-- Display Categories -->
+        <div class="section">
+            <h2>Categories</h2>
+            <div id="categoryList" class="list"></div>
+        </div>
+
+        <!-- Display Products -->
+        <div class="section">
+            <h2>Products</h2>
+            <div id="productList" class="list"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const addCategoryForm = document.getElementById('addCategoryForm');
+            const addProductForm = document.getElementById('addProductForm');
+            const categoryList = document.getElementById('categoryList');
+            const productList = document.getElementById('productList');
+            const productCategory = document.getElementById('productCategory');
+
+            // Fetch and display categories
+            async function fetchCategories() {
+                const response = await fetch('/categories');
+                const categories = await response.json();
+                categoryList.innerHTML = categories.map(c => `
+                    <div class="list-item" data-id="${c._id}">
+                        ${c.name}
+                        <button class="delete-category" data-id="${c._id}">Delete</button>
+                    </div>
+                `).join('');
+                productCategory.innerHTML = categories.map(c => `<option value="${c._id}">${c.name}</option>`).join('');
+
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-category').forEach(button => {
+                    button.addEventListener('click', () => {
+                        deleteCategory(button.dataset.id);
+                    });
+                });
+            }
+
+            // Fetch and display products
+            async function fetchProducts() {
+                const response = await fetch('/products');
+                const products = await response.json();
+                productList.innerHTML = products.map(p => `
+                    <div class="list-item" data-id="${p._id}">
+                        <div>
+                            <h3>${p.name}</h3>
+                            <p>Category: ${p.category.name}</p>
+                            <p>Details: ${p.details.map(d => `${d.key}: ${d.value}`).join(', ')}</p>
+                            <p>Quantity: ${p.quantity}</p>
+                            <p>Price: $${p.price}</p>
+                            ${p.image ? `<img src="${p.image}" alt="${p.name}">` : ''}
+                        </div>
+                        <button class="delete-product" data-id="${p._id}">Delete</button>
+                    </div>
+                `).join('');
+
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-product').forEach(button => {
+                    button.addEventListener('click', () => {
+                        deleteProduct(button.dataset.id);
+                    });
+                });
+            }
+
+            // Handle category form submission
+            addCategoryForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(addCategoryForm);
+                await fetch('/categories', {
+                    method: 'POST',
+                    body: JSON.stringify(Object.fromEntries(formData)),
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                addCategoryForm.reset();
+                fetchCategories();
+            });
+
+            // Handle product form submission
+            addProductForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const formData = new FormData(addProductForm);
+                await fetch('/products', {
+                    method: 'POST',
+                    body: formData,
+                });
+                addProductForm.reset();
+                fetchProducts();
+            });
+
+            // Delete a category
+            async function deleteCategory(id) {
+                if (confirm("Are you sure you want to delete this category?")) {
+                    try {
+                        await fetch(`/categories/${id}`, {
+                            method: 'DELETE'
+                        });
+                        fetchCategories();
+                    } catch (error) {
+                        console.error('Error deleting category:', error);
+                    }
+                }
+            }
+
+            // Delete a product
+            async function deleteProduct(id) {
+                if (confirm("Are you sure you want to delete this product?")) {
+                    try {
+                        await fetch(`/products/${id}`, {
+                            method: 'DELETE'
+                        });
+                        fetchProducts();
+                    } catch (error) {
+                        console.error('Error deleting product:', error);
+                    }
+                }
+            }
+
+            fetchCategories();
+            fetchProducts();
+        });
+    </script>
+</body>
+</html>
