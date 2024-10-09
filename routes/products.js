@@ -12,8 +12,8 @@ const storage = new CloudinaryStorage({
     folder: 'products',
     allowed_formats: ['jpg', 'png', 'jpeg'],
   },
-});
-
+});  
+ 
 const upload = multer({ storage });
 
 router.post('/', upload.array('images'), async (req, res) => {
@@ -54,16 +54,17 @@ router.delete('/:id', async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find({}).populate("category");
+    // const products = await Product.find({})
     res.status(200).send(products);
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 });
-
+ 
 router.get('/by-category/:categoryId', async (req, res) => {
   try {
     const { categoryId } = req.params;
-
+console.log(categoryId);
     if (categoryId === "All Products") {
       const products = await Product.find({})
       .populate("category")
@@ -72,6 +73,8 @@ router.get('/by-category/:categoryId', async (req, res) => {
     }
 
     const products = await Product.find({ category: categoryId }).populate("category");
+    // const products = await Product.find({  });
+    console.log(products);
     return res.status(200).json(products);
   } catch (error) {
     console.error(error);

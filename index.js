@@ -2,29 +2,43 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const dotenv = require("dotenv").config()
+const bodyParser=require('body-parser');
 const app = express();
 const port = 5000;
 const crypto = require("crypto");
-
+require("dotenv").config();
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.error('MongoDB connection error:', err));
-
+const client=process.env.client_URL;
 
 const categoryRoutes = require('./routes/categories');
 const productRoutes = require('./routes/products');
 const blogRoutes = require('./routes/blogs');
 const payments = require("./routes/payments")
-
+  
 app.use('/categories', categoryRoutes);
 app.use('/products', productRoutes);
 app.use('/api/blogs', blogRoutes);
-app.use("/api/payments",payments)
+app.use("/api/payments",payments);
+
+app.post('/success', (req, res) => {
+  // Handle success response
+  // res.send('Payment Successful');
+  res.redirect(`${client}/success`);
+});
+
+app.post('/failure', (req, res) => {
+  console.log(req.body);
+  // Handle failure response
+  // res.send('Payment Failed');
+  res.redirect(`${client}/failure`);
+});
 
 app.use(express.static(path.resolve(__dirname, 'frontend', 'build')));
 app.get('/', (req, res) => {
@@ -50,21 +64,6 @@ async function updateProductSequences() {
 }
 
 
-const key = 'qRhovz'
-const txnid = '123456'; 
-const amount = '1000';
-const productinfo = 'product_name'; 
-const firstname = 'John'; 
-const email = 'john@example.com'; 
-const salt = '7C0ksxLARbSbBsIaZVqohPHcYkBWtEAf';
-
-function generateHash(key, txnid, amount, productinfo, firstname, email, salt) {
-  const input = `${key}|${txnid}|${amount}|${productinfo}|${firstname}|${email}|||||||||||${salt}`;
-  return crypto.createHash('sha512').update(input).digest('hex');
-}
-console.log(generateHash(key,txnid,amount,productinfo,firstname,email,salt))
-
-// Start the server on localhost
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
