@@ -32,7 +32,7 @@ app.post('/success', (req, res) => {
   // res.send('Payment Successful');
   res.redirect(`${client}/success`);
 });
-
+ 
 app.post('/failure', (req, res) => {
   console.log(req.body);
   // Handle failure response
