@@ -1,0 +1,192 @@
+[{
+  "_id": {
+    "$oid": "66b343f972e3f298257e4e71"
+  },
+  "name": "Nilgiri Oil",
+  "__v": 0,
+  "squence": "4"
+},
+{
+  "_id": {
+    "$oid": "66b3440372e3f298257e4e74"
+  },
+  "name": "Cough Reliever",
+  "__v": 0,
+  "squence": "30"
+},
+{
+  "_id": {
+    "$oid": "66b3444972e3f298257e4e8f"
+  },
+  "name": "Pain Balms",
+  "__v": 0,
+  "squence": "7"
+},
+{
+  "_id": {
+    "$oid": "66b3445072e3f298257e4e92"
+  },
+  "name": "Pain Relieving Roll On",
+  "__v": 0,
+  "squence": "33"
+},
+{
+  "_id": {
+    "$oid": "66b713874ab6153c8852f838"
+  },
+  "name": "CHURNA",
+  "__v": 0,
+  "squence": "31"
+},
+{
+  "_id": {
+    "$oid": "66b71bf34ab6153c8852f865"
+  },
+  "name": "SKIN",
+  "__v": 0,
+  "squence": "32"
+},
+{
+  "_id": {
+    "$oid": "66bb4a2de325b18514e5bb05"
+  },
+  "name": "HERBAL SHAMPOO",
+  "__v": 0,
+  "squence": "34"
+},
+{
+  "_id": {
+    "$oid": "66bb5932e325b18514e5bbdc"
+  },
+  "name": "HERBAL FACE PACK",
+  "__v": 0,
+  "squence": "35"
+},
+{
+  "_id": {
+    "$oid": "66bb7f8ae325b18514e5c111"
+  },
+  "name": "SKIN CARE OINTMENTS",
+  "__v": 0,
+  "squence": "36"
+},
+{
+  "_id": {
+    "$oid": "66c99ea935ca080f2cf04e79"
+  },
+  "name": "ghas ka tel",
+  "__v": 0,
+  "squence": "10"
+},
+{
+  "_id": {
+    "$oid": "66c9a73535ca080f2cf04f4c"
+  },
+  "name": "A-1 RUB & INHALER",
+  "__v": 0,
+  "squence": "3"
+},
+{
+  "_id": {
+    "$oid": "66c9aa1235ca080f2cf04fa5"
+  },
+  "name": "Massage oil",
+  "__v": 0,
+  "squence": "13"
+},
+{
+  "_id": {
+    "$oid": "66c9ac0335ca080f2cf04fc8"
+  },
+  "name": "Face Beauty Care",
+  "__v": 0,
+  "squence": "14"
+},
+{
+  "_id": {
+    "$oid": "66c9b16435ca080f2cf0504d"
+  },
+  "name": "Herbal Hair Oils",
+  "__v": 0,
+  "squence": "1"
+},
+{
+  "_id": {
+    "$oid": "66c9b62f35ca080f2cf0510a"
+  },
+  "name": "BABY CARE",
+  "__v": 0,
+  "squence": "6"
+},
+{
+  "_id": {
+    "$oid": "66c9b80b35ca080f2cf05146"
+  },
+  "name": "PAIN RELIEVERS",
+  "__v": 0,
+  "squence": "17"
+},
+{
+  "_id": {
+    "$oid": "66c9b9e035ca080f2cf05185"
+  },
+  "name": "DANT SANJIVANI",
+  "__v": 0,
+  "squence": "18"
+},
+{
+  "_id": {
+    "$oid": "66c9fd6d10e91a65d1bbf8f5"
+  },
+  "name": "COLD PRESSED OILS",
+  "__v": 0,
+  "squence": "5"
+},
+{
+  "_id": {
+    "$oid": "66cd98437f5c39fcd29dc3ee"
+  },
+  "name": "Herbal Soaps",
+  "__v": 0,
+  "squence": "9"
+},
+{
+  "_id": {
+    "$oid": "66d18e7abedca165436b668e"
+  },
+  "name": "KUMKUMADI TAILA",
+  "__v": 0,
+  "squence": "21"
+},
+{
+  "_id": {
+    "$oid": "66d18ef9bedca165436b6695"
+  },
+  "name": "Extra Strong Pain Balm",
+  "__v": 0,
+  "squence": "22"
+},
+{
+  "_id": {
+    "$oid": "66d1ba1578ffd465adbb5ad4"
+  },
+  "name": "Body Lotion",
+  "__v": 0,
+  "squence": "8"
+},
+{
+  "_id": {
+    "$oid": "66d1bf7878ffd465adbb5b0a"
+  },
+  "name": "Pain Reliving Oil",
+  "__v": 0,
+  "squence": "2"
+},
+{
+  "_id": {
+    "$oid": "66d986e3a5c8eaebed2c8563"
+  },
+  "name": "PRICKLY HEAT POWDERS",
+  "__v": 0,
+  "squence": "9"
+}]

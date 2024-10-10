@@ -17,5 +17,5 @@ const productSchema = new mongoose.Schema({
   squence:{type:Number},
   minimum:{type:Number}
 });
-
+ 
 module.exports = mongoose.model('Product', productSchema);
